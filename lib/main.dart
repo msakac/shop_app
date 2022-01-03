@@ -6,7 +6,8 @@ import 'package:provider/provider.dart';
 import './screens/products_overview_screen.dart';
 import './screens/product_detail_screen.dart';
 import './providers/products.dart';
-
+import './providers/cart.dart';
+import './screens/cart_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,8 +17,15 @@ class MyApp extends StatelessWidget {
   //beautiful tree
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider( //provider klasa
-      create: (ctx) => Products(), //provider verzija 4.x.x, create umjesto builder
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider( //provider klasa
+          create: (ctx) => Products(),
+        ),
+        ChangeNotifierProvider( //provider klasa
+          create: (ctx) => Cart(),
+        ),
+      ], //provider verzija 4.x.x, create umjesto builder
       //mjenjali se budu samo oni widget koji slusaju providera
       child: MaterialApp(
         title: 'MyShop',
@@ -29,9 +37,9 @@ class MyApp extends StatelessWidget {
         home: ProductsOverviewScreen(),
         routes: {
           ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
+          CartScreen.routeName: (ctx) => CartScreen(),
         },
       ),
     );
   }
 }
-
