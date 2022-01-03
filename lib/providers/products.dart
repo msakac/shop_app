@@ -7,6 +7,9 @@ import './product.dart';
 
 class Products with ChangeNotifier { //promjene unutar liste produkta dogadaju se samo unutar ove klase
   //provider klasa
+
+  var _showFavorites = false;
+
   List<Product> _items = [Product(
       id: 'p1',
       title: 'Red Shirt',
@@ -40,14 +43,27 @@ class Products with ChangeNotifier { //promjene unutar liste produkta dogadaju s
           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
     ),
   ]; //ova lista produkta je privatna
-
-  List<Product> get items { //getter koji vraca sve podatke iz privatne liste
+  List<Product> get items { //getter koji vraca sve podatke iz privatne liste ili sve koji su favorite
+    if(_showFavorites){
+      return _items.where((element) => element.isFavorite).toList();
+    } 
     return [..._items]; //vracam kopiju
   }
 
   Product findById(String id){
     return _items.firstWhere((product) => product.id == id);
   }
+
+  void showFavoritesOnly(){
+    _showFavorites = true;
+    notifyListeners();
+  }
+
+    void showAll(){
+    _showFavorites = false;
+    notifyListeners();
+  }
+  
 
   void addProduct(){ //ovdje se dodaju novi produkti. Promjene se dogadaju samo unutar klase tak da moremo koristiti notify listeners
     //_items.add(value);
