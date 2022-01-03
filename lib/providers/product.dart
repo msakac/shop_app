@@ -16,4 +16,9 @@ class Product with ChangeNotifier {
     @required this.imageUrl,
     this.isFavorite = false,
   }); //named arguments
+
+  void toggleFavoriteStatus(){
+    isFavorite = !isFavorite;
+    notifyListeners();
+  }
 }
