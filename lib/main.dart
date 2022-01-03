@@ -12,6 +12,7 @@ void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   //aded coment to make git tree look nicer
+  //aand another one
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider( //provider klasa
