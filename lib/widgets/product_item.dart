@@ -16,20 +16,22 @@ class ProductItem extends StatelessWidget {
     final product = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context, listen: false);
 
-      return ClipRRect(
+    return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: GridTile(
         child: GestureDetector(
             onTap: () {
-              Navigator.of(context)
-                  .pushNamed(ProductDetailScreen.routeName, arguments: product.id);
+              Navigator.of(context).pushNamed(ProductDetailScreen.routeName,
+                  arguments: product.id);
             },
             child: Image.network(product.imageUrl, fit: BoxFit.cover)),
         footer: GridTileBar(
           backgroundColor: Colors.black87,
           leading: Consumer<Product>(
-            builder: (ctx, product, child) => IconButton( //we can give Consumer child: and that child never changes
-              icon: Icon(product.isFavorite ? Icons.favorite : Icons.favorite_outline),
+            builder: (ctx, product, child) => IconButton(
+              //we can give Consumer child: and that child never changes
+              icon: Icon(
+                  product.isFavorite ? Icons.favorite : Icons.favorite_outline),
               color: Theme.of(context).accentColor,
               onPressed: () {
                 product.toggleFavoriteStatus();
@@ -46,6 +48,22 @@ class ProductItem extends StatelessWidget {
           title: Text(
             product.title,
             textAlign: TextAlign.center,
+          ),
+        ),
+        header: GridTileBar(
+          trailing: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.black87,
+            ),
+            child: Text(
+              '\$${product.price}',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).accentColor,
+              ),
+            ),
           ),
         ),
       ),
