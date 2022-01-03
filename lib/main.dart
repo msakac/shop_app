@@ -11,6 +11,7 @@ import './providers/products.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  //aded coment to make git tree look nicer
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider( //provider klasa
