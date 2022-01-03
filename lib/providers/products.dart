@@ -45,6 +45,10 @@ class Products with ChangeNotifier { //promjene unutar liste produkta dogadaju s
     return [..._items]; //vracam kopiju
   }
 
+  Product findById(String id){
+    return _items.firstWhere((product) => product.id == id);
+  }
+
   void addProduct(){ //ovdje se dodaju novi produkti. Promjene se dogadaju samo unutar klase tak da moremo koristiti notify listeners
     //_items.add(value);
     notifyListeners();
