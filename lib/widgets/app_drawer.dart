@@ -23,7 +23,7 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.payment),
             title: Text('Orders'),
             onTap: (){
-              Navigator.of(context).pushReplacementNamed('/'); //todo na orders da ide
+              Navigator.of(context).pushReplacementNamed('/orders'); //todo na orders da ide
             },
           ),
         ],
