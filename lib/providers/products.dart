@@ -1,14 +1,12 @@
 // ignore_for_file: prefer_final_fields
 
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import './product.dart';
 
 class Products with ChangeNotifier {
-  //promjene unutar liste produkta dogadaju se samo unutar ove klase
-  //provider klasa
-
-  // var _showFavorites = false;
-
   List<Product> _items = [
     Product(
       id: 'p1',
@@ -59,17 +57,18 @@ class Products with ChangeNotifier {
     return _items.firstWhere((product) => product.id == id);
   }
 
-  // void showFavoritesOnly(){
-  //   _showFavorites = true;
-  //   notifyListeners();
-  // }
-
-  //   void showAll(){
-  //   _showFavorites = false;
-  //   notifyListeners();
-  // }
-
   void addProduct(Product product) {
+    final url = Uri.parse(
+        'https://shop-app-6ca39-default-rtdb.firebaseio.com/products.json');
+    http.post(url,
+        body: json.encode({
+          'title': product.title,
+          'description': product.description,
+          'imageUrl': product.imageUrl,
+          'price': product.price,
+          'isFavorite': product.isFavorite,
+        }));
+
     //ovdje se dodaju novi produkti. Promjene se dogadaju samo unutar klase tak da moremo koristiti notify listeners
     final newProduct = Product(
       title: product.title,
@@ -86,14 +85,12 @@ class Products with ChangeNotifier {
     final prodIndex = _items.indexWhere((element) => element.id == id);
     if (prodIndex >= 0) {
       _items[prodIndex] = newProduct;
-    }else{
-      
-    }
+    } else {}
     notifyListeners();
   }
 
-  void removeProduct(String id){
-    _items.removeWhere((element)=> element.id == id);
+  void removeProduct(String id) {
+    _items.removeWhere((element) => element.id == id);
     notifyListeners();
   }
 }
