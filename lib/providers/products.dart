@@ -8,8 +8,6 @@ import './product.dart';
 class Products with ChangeNotifier { //promjene unutar liste produkta dogadaju se samo unutar ove klase
   //provider klasa
 
-  // var _showFavorites = false;
-
   List<Product> _items = [Product(
       id: 'p1',
       title: 'Red Shirt',
