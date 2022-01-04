@@ -3,14 +3,14 @@
 import 'package:flutter/material.dart';
 import './product.dart';
 
-
-
-class Products with ChangeNotifier { //promjene unutar liste produkta dogadaju se samo unutar ove klase
+class Products with ChangeNotifier {
+  //promjene unutar liste produkta dogadaju se samo unutar ove klase
   //provider klasa
 
   // var _showFavorites = false;
 
-  List<Product> _items = [Product(
+  List<Product> _items = [
+    Product(
       id: 'p1',
       title: 'Red Shirt',
       description: 'A red shirt - it is pretty red!',
@@ -43,18 +43,19 @@ class Products with ChangeNotifier { //promjene unutar liste produkta dogadaju s
           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
     ),
   ]; //ova lista produkta je privatna
-  List<Product> get items { //getter koji vraca sve podatke iz privatne liste ili sve koji su favorite
+  List<Product> get items {
+    //getter koji vraca sve podatke iz privatne liste ili sve koji su favorite
     // if(_showFavorites){
     //   return _items.where((element) => element.isFavorite).toList();
-    // } 
+    // }
     return [..._items]; //vracam kopiju
   }
 
-  List<Product> get favoriteItems{
+  List<Product> get favoriteItems {
     return _items.where((element) => element.isFavorite).toList();
   }
 
-  Product findById(String id){
+  Product findById(String id) {
     return _items.firstWhere((product) => product.id == id);
   }
 
@@ -67,10 +68,17 @@ class Products with ChangeNotifier { //promjene unutar liste produkta dogadaju s
   //   _showFavorites = false;
   //   notifyListeners();
   // }
-  
 
-  void addProduct(){ //ovdje se dodaju novi produkti. Promjene se dogadaju samo unutar klase tak da moremo koristiti notify listeners
-    //_items.add(value);
+  void addProduct(Product product) {
+    //ovdje se dodaju novi produkti. Promjene se dogadaju samo unutar klase tak da moremo koristiti notify listeners
+    final newProduct = Product(
+      title: product.title,
+      description: product.description,
+      imageUrl: product.imageUrl,
+      price: product.price,
+      id: DateTime.now().toString(),
+    );
+    _items.add(newProduct);
     notifyListeners();
   }
 }
