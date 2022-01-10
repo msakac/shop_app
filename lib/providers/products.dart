@@ -57,19 +57,19 @@ class Products with ChangeNotifier {
     return _items.firstWhere((product) => product.id == id);
   }
 
-  Future<void> addProduct(Product product) {
+  Future<void> addProduct(Product product) async {
     final url = Uri.parse(
         'https://shop-app-6ca39-default-rtdb.firebaseio.com/products.json');
-    return http
-        .post(url,
-            body: json.encode({
-              'title': product.title,
-              'description': product.description,
-              'imageUrl': product.imageUrl,
-              'price': product.price,
-              'isFavorite': product.isFavorite,
-            }))
-        .then((response) {
+    try {
+      final response = await http.post(url,
+          body: json.encode({
+            'title': product.title,
+            'description': product.description,
+            'imageUrl': product.imageUrl,
+            'price': product.price,
+            'isFavorite': product.isFavorite,
+          }));
+
       final newProduct = Product(
         title: product.title,
         description: product.description,
@@ -77,12 +77,13 @@ class Products with ChangeNotifier {
         price: product.price,
         id: json.decode(response.body)['name'],
       );
+
       _items.add(newProduct);
       notifyListeners();
-    }).catchError((error){
+    } catch (error) {
+      print(error);
       throw error;
-    });
-
+    }
     //ovdje se dodaju novi produkti. Promjene se dogadaju samo unutar klase tak da moremo koristiti notify listeners
   }
 
